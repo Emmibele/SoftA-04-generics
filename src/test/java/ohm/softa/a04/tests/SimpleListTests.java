@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Iterator;
+import java.util.function.Function;
+
 /**
  * @author Peter Kurfer
  * Created on 10/6/17.
@@ -87,5 +90,19 @@ public class SimpleListTests {
 			// TODO: handle exception
 		}
 		assertEquals(list.size(), 1);
+	}
+
+	@Test
+	void testTransformList(){
+		logger.info("Testing the transformation of List Elements");
+
+		SimpleList<Double> squaredList = testList.map(i -> Math.pow(i, 2));
+		Iterator<Integer> firstIterator = testList.iterator();
+		Iterator<Double> targetIterator = squaredList.iterator();
+
+		while(firstIterator.hasNext() && targetIterator.hasNext()){
+			assertEquals(Math.pow(firstIterator.next(), 2), targetIterator.next());
+		}
+
 	}
 }

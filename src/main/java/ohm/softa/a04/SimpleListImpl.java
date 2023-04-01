@@ -34,6 +34,9 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 		size++;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public void addDefault(Class<T> _class) throws IllegalAccessException, InstantiationException{
 		add(_class.newInstance());
@@ -47,24 +50,7 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 		return size;
 	}
 
-	/**
-	 * Get a new SimpleList instance with all items of this list which match the given filter
-	 * @param filter SimpleFilter instance
-	 * @return new SimpleList instance
-	 */
-	public SimpleList<T> filter(SimpleFilter<T> filter){
-		SimpleList<T> result = new SimpleListImpl<T>();
-		for(T o : this){
-			if(filter.include(o)){
-				result.add(o);
-			}
-		}
-		return result;
-	}
 
-	/**
-	 * @inheritDoc
-	 */
 	@Override
 	public Iterator<T> iterator() {
 		return new SimpleIterator();
