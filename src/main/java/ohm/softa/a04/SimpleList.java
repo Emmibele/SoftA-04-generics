@@ -19,6 +19,12 @@ public interface SimpleList<T> extends Iterable<T> {
 	int size();
 
 	/**
+	 * Removes first Element with provided value from List
+	 * @param value
+	 */
+	void removeElement(T value);
+
+	/**
 	 * Get a new SimpleList instance with all items of this list which match the given filter
 	 * @param filter SimpleFilter instance
 	 * @return new SimpleList instance

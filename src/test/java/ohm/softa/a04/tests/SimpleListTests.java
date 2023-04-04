@@ -1,5 +1,6 @@
 package ohm.softa.a04.tests;
 
+import ohm.softa.a04.CollectionsUtility;
 import ohm.softa.a04.SimpleFilter;
 import ohm.softa.a04.SimpleList;
 import ohm.softa.a04.SimpleListImpl;
@@ -9,10 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Function;
+
+import javax.lang.model.element.Element;
 
 /**
  * @author Peter Kurfer
@@ -27,11 +32,11 @@ public class SimpleListTests {
 	void setup(){
 		testList = new SimpleListImpl<Integer>();
 
+		testList.add(3);
 		testList.add(1);
 		testList.add(2);
-		testList.add(3);
-		testList.add(4);
 		testList.add(5);
+		testList.add(4);
 	}
 
 	@Test
@@ -103,6 +108,35 @@ public class SimpleListTests {
 		while(firstIterator.hasNext() && targetIterator.hasNext()){
 			assertEquals(Math.pow(firstIterator.next(), 2), targetIterator.next());
 		}
+	}
 
+	@Test
+	void removeElement(){
+		logger.info("Testing the removal of List Elements");
+		int valToRemove = 3;
+		int listSize = testList.size() -1;
+		testList.removeElement(valToRemove);
+		
+		assertEquals(listSize, testList.size());
+
+		for(Integer element: testList){
+			assertNotEquals(valToRemove, element);
+		}
+	}
+
+	@Test
+	void sortElements(){
+		SimpleList<Integer> sortedList = CollectionsUtility.sort(testList, new Comparator<Integer>(){
+			@Override
+			public int compare(Integer arg0, Integer arg1) {
+				return arg0 - arg1;
+			}
+		});
+
+		int assumedSmaller = 0;
+		for(Integer i : sortedList){
+			assertTrue(assumedSmaller <= i);
+			assumedSmaller = i;
+		}
 	}
 }

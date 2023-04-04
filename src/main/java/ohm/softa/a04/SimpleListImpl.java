@@ -34,6 +34,18 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 		size++;
 	}
 
+	public void removeElement(T value){
+		if(head.item.equals(value)){
+			head = head.next;
+			size--;
+		}
+		else{
+			boolean removal = head.removeElement(value);
+			if(removal)
+				size--;
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -116,6 +128,23 @@ public class SimpleListImpl<T> implements SimpleList<T> {
 		 */
 		public void setNext(ListElement<U> next) {
 			this.next = next;
+		}
+
+		public boolean removeElement(U value){
+			// if(this.next == null)
+			// 	return false;
+			// boolean returnVal = false;
+			if (this.next != null)
+			{
+				if (this.next.getItem().equals(value)){
+					this.next = this.next.getNext();
+					return true;
+				}
+				else{
+					return this.getNext().removeElement(value);
+				}
+			}
+			return false;
 		}
 	}
 
